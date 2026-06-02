@@ -1,291 +1,315 @@
-// CLOCK
-const hour =
-document.getElementById("hour");
-
-const minute =
-document.getElementById("minute");
-
-const second =
-document.getElementById("second");
-
-const digitalClock =
-document.getElementById("digitalClock");
-
-const greeting =
-document.getElementById("greeting");
-
-const dateEl =
-document.getElementById("date");
-
-function updateClock(){
-
-    const now = new Date();
-
-    let h = now.getHours();
-    let m = now.getMinutes();
-    let s = now.getSeconds();
-
-    // Analog
-    hour.style.transform =
-    `translateX(-50%)
-     rotate(${h*30+m*0.5}deg)`;
-
-    minute.style.transform =
-    `translateX(-50%)
-     rotate(${m*6}deg)`;
-
-    second.style.transform =
-    `translateX(-50%)
-     rotate(${s*6}deg)`;
-
-    // Digital
-    digitalClock.innerHTML =
-    `${String(h).padStart(2,'0')}
-     :
-     ${String(m).padStart(2,'0')}
-     :
-     ${String(s).padStart(2,'0')}`;
-
-    // Greeting
-    if(h < 12){
-
-        greeting.innerHTML =
-        "🌅 Good Morning Anusha";
-
-    }
-
-    else if(h < 18){
-
-        greeting.innerHTML =
-        "☀️ Good Afternoon Anusha";
-
-    }
-
-    else{
-
-        greeting.innerHTML =
-        "🌙 Good Evening Anusha";
-    }
-
-    // Date
-    dateEl.innerHTML =
-    now.toDateString();
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
 }
 
-setInterval(updateClock,1000);
-
-updateClock();
-
-
-// WORLD CLOCK
-function updateWorldClock(){
-
-    document.getElementById("india")
-    .innerHTML =
-    new Date().toLocaleTimeString(
-        "en-IN"
-    );
-
-    document.getElementById("usa")
-    .innerHTML =
-    new Date().toLocaleTimeString(
-        "en-US",
-        {timeZone:'America/New_York'}
-    );
-
-    document.getElementById("japan")
-    .innerHTML =
-    new Date().toLocaleTimeString(
-        "en-JP",
-        {timeZone:'Asia/Tokyo'}
-    );
+body{
+    background:linear-gradient(135deg,#0f172a,#1e3a8a,#06b6d4);
+    color:white;
+    min-height:100vh;
+    overflow-x:hidden;
+    transition:0.4s;
 }
 
-setInterval(updateWorldClock,1000);
-
-updateWorldClock();
-
-
-// WEATHER API
-async function getWeather(){
-
-    const apiKey = "YOUR_API_KEY";
-
-    const city = "Vijayawada";
-
-    const url =
-`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-
-    const response = await fetch(url);
-
-    const data = await response.json();
-
-    document.getElementById("temp")
-    .innerHTML =
-    `🌡 Temp: ${data.main.temp}°C`;
-
-    document.getElementById("humidity")
-    .innerHTML =
-    `💧 Humidity:
-     ${data.main.humidity}%`;
-
-    document.getElementById("wind")
-    .innerHTML =
-    `🌬 Wind:
-     ${data.wind.speed} km/h`;
+body.light{
+    background:linear-gradient(135deg,#f8fafc,#e2e8f0,#cbd5e1);
+    color:#111;
 }
 
-getWeather();
+/* Loader */
 
+#loader{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:#0f172a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    font-size:2rem;
+}
 
-// BATTERY STATUS
-navigator.getBattery().then(function(battery){
+/* Animated Background */
 
-    function updateBattery(){
+.particles{
+    position:fixed;
+    width:100%;
+    height:100%;
+    z-index:-1;
 
-        document.getElementById("battery")
-        .innerHTML =
-        `${Math.floor(
-            battery.level*100
-        )}% ${
-            battery.charging
-            ? "⚡ Charging"
-            : ""
-        }`;
+    background:
+    radial-gradient(circle,
+    rgba(255,255,255,.2) 2px,
+    transparent 2px);
+
+    background-size:50px 50px;
+
+    animation:move 20s linear infinite;
+}
+
+@keyframes move{
+    from{
+        background-position:0 0;
     }
-
-    updateBattery();
-
-    battery.addEventListener(
-        "levelchange",
-        updateBattery
-    );
-});
-
-
-// INTERNET STATUS
-function updateInternet(){
-
-    if(navigator.onLine){
-
-        document.getElementById("internet")
-        .innerHTML =
-        "🟢 Connected";
-
-    }
-
-    else{
-
-        document.getElementById("internet")
-        .innerHTML =
-        "🔴 Offline";
+    to{
+        background-position:200px 200px;
     }
 }
 
-window.addEventListener(
-    "online",
-    updateInternet
-);
+/* Header */
 
-window.addEventListener(
-    "offline",
-    updateInternet
-);
+header{
+    text-align:center;
+    padding:30px 15px;
+}
 
-updateInternet();
+header h1{
+    font-size:3rem;
+}
 
+header p{
+    margin-top:10px;
+}
 
-// VOICE ASSISTANT
-window.onload = function(){
+.header-buttons{
+    margin-top:15px;
+}
 
-    let speech =
-    new SpeechSynthesisUtterance(
+button{
+    border:none;
+    padding:10px 15px;
+    border-radius:10px;
+    cursor:pointer;
+    margin:5px;
+    background:#2563eb;
+    color:white;
+}
 
-    "Welcome Anusha to Smart Clock Dashboard"
+button:hover{
+    opacity:0.85;
+}
 
-    );
+/* Hero */
 
-    speechSynthesis.speak(speech);
-};
+.hero{
+    text-align:center;
+    padding:20px;
+}
 
+.clock-card{
+    max-width:600px;
+    margin:20px auto;
 
-// DARK MODE
-document.getElementById("themeBtn")
-.addEventListener("click",()=>{
+    background:rgba(255,255,255,.15);
 
-    document.body.classList.toggle(
-        "light-mode"
-    );
+    backdrop-filter:blur(15px);
 
-});
+    padding:25px;
 
+    border-radius:20px;
 
-// STOPWATCH
-let sec = 0;
-let min = 0;
-let hrs = 0;
+    box-shadow:0 8px 32px rgba(0,0,0,.3);
+}
 
-let timer = null;
+#clock{
+    font-size:4rem;
+}
 
-function stopwatchRun(){
+#greeting{
+    margin-bottom:20px;
+}
 
-    sec++;
+/* Analog Clock */
 
-    if(sec == 60){
+.analog-clock{
+    display:flex;
+    justify-content:center;
+    margin-top:30px;
+}
 
-        sec = 0;
+.clock{
+    width:250px;
+    height:250px;
+    border:8px solid white;
+    border-radius:50%;
+    position:relative;
+    background:rgba(255,255,255,.1);
+}
 
-        min++;
+.hand{
+    position:absolute;
+    bottom:50%;
+    left:50%;
+    transform-origin:bottom;
+    transform:translateX(-50%);
+    border-radius:10px;
+}
+
+.hour{
+    width:6px;
+    height:70px;
+    background:white;
+}
+
+.minute{
+    width:4px;
+    height:90px;
+    background:#00ffcc;
+}
+
+.second{
+    width:2px;
+    height:100px;
+    background:red;
+}
+
+.center-dot{
+    width:15px;
+    height:15px;
+    border-radius:50%;
+    background:white;
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+}
+
+/* Dashboard */
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+    padding:30px;
+}
+
+.card{
+    background:rgba(255,255,255,.15);
+
+    backdrop-filter:blur(15px);
+
+    padding:20px;
+
+    border-radius:20px;
+
+    box-shadow:0 8px 32px rgba(0,0,0,.3);
+}
+
+.card h2{
+    margin-bottom:15px;
+}
+
+.card input{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    margin:10px 0;
+}
+
+.card p{
+    margin-top:10px;
+}
+
+/* To Do */
+
+.todo-section{
+    padding:20px;
+}
+
+#taskList{
+    margin-top:15px;
+    padding-left:20px;
+}
+
+#taskList li{
+    margin:8px 0;
+}
+
+/* Theme */
+
+.theme-section{
+    padding:20px;
+}
+
+/* Features */
+
+.features{
+    padding:40px 20px;
+    text-align:center;
+}
+
+.feature-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-top:20px;
+}
+
+.feature-grid div{
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(10px);
+
+    padding:15px;
+
+    border-radius:15px;
+}
+
+/* About */
+
+.about{
+    padding:40px 20px;
+    text-align:center;
+}
+
+.about p{
+    max-width:800px;
+    margin:auto;
+    line-height:1.8;
+}
+
+/* Progress */
+
+progress{
+    width:100%;
+    height:20px;
+}
+
+/* Footer */
+
+footer{
+    text-align:center;
+    padding:40px 20px;
+}
+
+footer p{
+    margin-top:10px;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    header h1{
+        font-size:2rem;
     }
 
-    if(min == 60){
-
-        min = 0;
-
-        hrs++;
+    #clock{
+        font-size:2.5rem;
     }
 
-    document.getElementById("stopwatch")
-    .innerHTML =
-    `${String(hrs).padStart(2,'0')}
-     :
-     ${String(min).padStart(2,'0')}
-     :
-     ${String(sec).padStart(2,'0')}`;
+    .clock{
+        width:200px;
+        height:200px;
+    }
+
+    .dashboard{
+        padding:15px;
+    }
 }
-
-function startStopwatch(){
-
-    if(timer !== null) return;
-
-    timer =
-    setInterval(stopwatchRun,1000);
-}
-
-function pauseStopwatch(){
-
-    clearInterval(timer);
-
-    timer = null;
-}
-
-function resetStopwatch(){
-
-    clearInterval(timer);
-
-    timer = null;
-
-    sec = 0;
-    min = 0;
-    hrs = 0;
-
-    document.getElementById("stopwatch")
-    .innerHTML = "00:00:00";
-}
-let hours = now.getHours();
-let session = "AM";
-
-if(hours >= 12){
-  session = "PM";
-}
-hours = hours % 12 || 12;
