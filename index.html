@@ -1,146 +1,319 @@
-<h2 id="greeting"></h2>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    >
+</div>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TimeVerse Dashboard</title>
+<title>TimeVerse Pro - Smart Digital Clock Dashboard</title>
 
 <link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
 
-<div class="container">
+<!-- Loader -->
+<div id="loader">
+    <div class="loader-content">
+        <h1>⏰ TimeVerse Pro</h1>
+        <p>Loading Dashboard...</p>
+    </div>
+</div>
 
-    <header>
-        <h1>⏰ TimeVerse</h1>
+<!-- Header -->
+<header>
+
+    <div class="logo">
+        <h1>⏰ TimeVerse Pro</h1>
         <p>Smart Digital Clock Dashboard</p>
-    </header>
+    </div>
 
-    <!-- Digital Clock -->
-    <div class="clock-box">
-        <h2 id="digitalClock">00:00:00</h2>
-        <p id="date"></p>
+    <div class="header-buttons">
+
+        <button id="themeBtn">
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <button onclick="openFullscreen()">
+            <i class="fas fa-expand"></i>
+        </button>
+
+    </div>
+
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+
+    <div class="digital-card">
+
+        <h2 id="greeting">Good Morning</h2>
+
+        <h1 id="clock">00:00:00</h1>
+
+        <h3 id="date">Loading...</h3>
+
     </div>
 
     <!-- Analog Clock -->
-    <div class="analog-clock">
-        <div class="hand hour" id="hour"></div>
-        <div class="hand minute" id="minute"></div>
-        <div class="hand second" id="second"></div>
-        <div class="center-dot"></div>
+
+    <div class="analog-card">
+
+        <div class="analog-clock">
+
+            <div class="hand hour" id="hour"></div>
+            <div class="hand minute" id="minute"></div>
+            <div class="hand second" id="second"></div>
+
+            <div class="center-dot"></div>
+
+            <span class="num n12">12</span>
+            <span class="num n3">3</span>
+            <span class="num n6">6</span>
+            <span class="num n9">9</span>
+
+        </div>
+
     </div>
+
+</section>
+
+<!-- Dashboard Grid -->
+
+<section class="dashboard">
+
+    <!-- Alarm -->
+
     <div class="card">
-    <h3>🌍 World Clock</h3>
 
-    <p>🇮🇳 India: <span id="india"></span></p>
-    <p>🇺🇸 USA: <span id="usa"></span></p>
-    <p>🇬🇧 UK: <span id="uk"></span></p>
-    <p>🇯🇵 Japan: <span id="japan"></span></p>
-    <p>🇦🇺 Australia: <span id="australia"></span></p>
-    <p>🇦🇪 Dubai: <span id="dubai"></span></p>
-    <p>🇨🇳 China: <span id="china"></span></p>
-    <p>🇫🇷 France: <span id="france"></span></p>
-</div>
+        <h2><i class="fas fa-bell"></i> Alarm Manager</h2>
 
-    <!-- Widgets -->
-    <section class="widgets">
+        <input type="time" id="alarmTime">
 
-        <div class="card">
-            <h3>⏰ Alarm</h3>
-            <input type="time" id="alarmTime">
-            <button onclick="setAlarm()">Set Alarm</button>
+        <div class="btn-group">
+
+            <button onclick="setAlarm()">
+                Set Alarm
+            </button>
+
+            <button onclick="stopAlarm()">
+                Stop
+            </button>
+
+            <button onclick="snoozeAlarm()">
+                Snooze
+            </button>
+
         </div>
 
-        <div class="card">
-            <h3>⏱ Stopwatch</h3>
-            <h2 id="stopwatch">00:00:00</h2>
-            <button onclick="startStopwatch()">Start</button>
-            <button onclick="stopStopwatch()">Stop</button>
-            <button onclick="resetStopwatch()">Reset</button>
-        </div>
-
-        
-
-        <div class="card">
-            <h3>🔋 Battery</h3>
-            <p id="battery">Loading...</p>
-        </div>
-
-        <div class="card">
-            <h3>📅 Calendar</h3>
-            <input type="date">
-        </div>
-
-        <div class="card">
-            <h3>👥 Visitors</h3>
-            <p id="visitors">1</p>
-        </div>
-
-    </section>
-
-    <!-- To Do -->
-    <section class="todo">
-        <h2>📝 To Do List</h2>
-        <input type="text" id="taskInput" placeholder="Add task">
-        <button onclick="addTask()">Add</button>
-        <ul id="taskList"></ul>
-    </section>
-
-    <!-- Quotes -->
-    <section class="quotes">
-        <h2>💡 Daily Quote</h2>
-        <p id="quote">Believe you can and you're halfway there.</p>
-    </section>
-
-    <!-- Theme Changer -->
-    <section class="theme">
-        <h2>🎨 Theme Changer</h2>
-        <button onclick="changeTheme('#1e3a8a','#38bdf8')">Blue</button>
-        <button onclick="changeTheme('#4c1d95','#8b5cf6')">Purple</button>
-        <button onclick="changeTheme('#064e3b','#10b981')">Green</button>
-    </section>
-
-    <!-- Features -->
-    <section class="features">
-        <h2>🚀 Features</h2>
-
-        <div class="feature-grid">
-            <div class="feature">⏰ Digital Clock</div>
-            <div class="feature">🕒 Analog Clock</div>
-            <div class="feature">🌍 World Clock</div>
-            <div class="feature">⏰ Alarm</div>
-            <div class="feature">⏱ Stopwatch</div>
-            <div class="feature">📅 Calendar</div>
-            <div class="feature">🔋 Battery Status</div>
-            <div class="feature">📝 To-Do List</div>
-            <div class="feature">💡 Quotes</div>
-            <div class="feature">👥 Visitor Counter</div>
-            <div class="feature">🎨 Theme Changer</div>
-            <div class="feature">📱 Responsive Design</div>
-        </div>
-    </section>
-
-    <!-- About -->
-    <section class="about">
-        <h2>About TimeVerse</h2>
-        <p>
-            TimeVerse is a Smart Digital Clock Dashboard developed using
-            HTML, CSS and JavaScript. It combines productivity and
-            time management tools in a modern responsive interface.
+        <p id="alarmStatus">
+            No Alarm Set
         </p>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <h2>⏰ TimeVerse Dashboard</h2>
-        <p>Designed & Developed by Anusha Rani</p>
-        <p>AI & DS Student</p>
-        <p>© 2026 All Rights Reserved</p>
-    </footer>
+    </div>
 
-</div>
+    <!-- Stopwatch -->
+
+    <div class="card">
+
+        <h2>
+            <i class="fas fa-stopwatch"></i>
+            Stopwatch
+        </h2>
+
+        <h1 id="stopwatch">
+            00:00:00
+        </h1>
+
+        <div class="btn-group">
+
+            <button onclick="startStopwatch()">
+                Start
+            </button>
+
+            <button onclick="pauseStopwatch()">
+                Pause
+            </button>
+
+            <button onclick="resetStopwatch()">
+                Reset
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- World Clock -->
+
+    <div class="card">
+
+        <h2>
+            <i class="fas fa-globe"></i>
+            World Clock
+        </h2>
+
+        <p>🇮🇳 India : <span id="india"></span></p>
+        <p>🇺🇸 USA : <span id="usa"></span></p>
+        <p>🇬🇧 London : <span id="london"></span></p>
+
+    </div>
+
+    <!-- Battery -->
+
+    <div class="card">
+
+        <h2>
+            <i class="fas fa-battery-half"></i>
+            Battery
+        </h2>
+
+        <p id="battery">
+            Loading...
+        </p>
+
+    </div>
+
+    <!-- Calendar -->
+
+    <div class="card">
+
+        <h2>
+            <i class="fas fa-calendar"></i>
+            Calendar
+        </h2>
+
+        <input type="date">
+
+    </div>
+
+    <!-- Visitor Counter -->
+
+    <div class="card">
+
+        <h2>
+            <i class="fas fa-users"></i>
+            Visitors
+        </h2>
+
+        <h1 id="visitorCount">0</h1>
+
+    </div>
+
+</section>
+
+<!-- To Do -->
+
+<section class="todo-section">
+
+    <div class="card large-card">
+
+        <h2>
+            <i class="fas fa-list-check"></i>
+            To-Do List
+        </h2>
+
+        <div class="todo-box">
+
+            <input
+            type="text"
+            id="taskInput"
+            placeholder="Enter Task">
+
+            <button onclick="addTask()">
+                Add Task
+            </button>
+
+        </div>
+
+        <ul id="taskList"></ul>
+
+    </div>
+
+</section>
+
+<!-- Quote -->
+
+<section class="quote-section">
+
+    <div class="card">
+
+        <h2>
+            <i class="fas fa-lightbulb"></i>
+            Daily Motivation
+        </h2>
+
+        <p id="quote"></p>
+
+    </div>
+
+</section>
+
+<!-- Theme Colors -->
+
+<section class="theme-section">
+
+    <div class="card">
+
+        <h2>
+            <i class="fas fa-palette"></i>
+            Theme Colors
+        </h2>
+
+        <div class="theme-buttons">
+
+            <button onclick="changeTheme('#2563eb')">
+                Blue
+            </button>
+
+            <button onclick="changeTheme('#9333ea')">
+                Purple
+            </button>
+
+            <button onclick="changeTheme('#16a34a')">
+                Green
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Footer -->
+
+<footer>
+
+    <h2>⏰ TimeVerse Pro</h2>
+
+    <p>
+        Designed & Developed by
+        <strong>Anusha Rani</strong>
+    </p>
+
+    <p>
+        Artificial Intelligence & Data Science
+    </p>
+
+    <p>
+        © 2026 All Rights Reserved
+    </p>
+
+</footer>
+
+<!-- Alarm Sound -->
+
+<audio id="alarmSound" loop>
+    <source src="alarm.mp3" type="audio/mpeg">
+</audio>
 
 <script src="script.js"></script>
+
 </body>
+</html>
 </html>

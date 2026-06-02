@@ -1,192 +1,277 @@
-// =====================
-// Greeting
-// =====================
+// ===============================
+// LOADER
+// ===============================
 
-function greeting() {
-    let hour = new Date().getHours();
-    let msg = "";
+window.addEventListener("load", () => {
 
-    if (hour < 12) {
-        msg = "☀️ Good Morning";
-    } else if (hour < 18) {
-        msg = "🌤 Good Afternoon";
-    } else {
-        msg = "🌙 Good Evening";
-    }
+    setTimeout(() => {
 
-    document.getElementById("greeting").innerHTML = msg;
-}
+        const loader =
+            document.getElementById("loader");
 
-greeting();
+        if(loader){
+            loader.style.display = "none";
+        }
 
+    }, 2000);
 
-// =====================
-// Digital & Analog Clock
-// =====================
+});
 
-function updateClock() {
+// ===============================
+// DIGITAL CLOCK + DATE
+// ===============================
 
-    let now = new Date();
+function updateClock(){
 
-    document.getElementById("digitalClock").innerHTML =
+    const now = new Date();
+
+    document.getElementById("clock").innerHTML =
         now.toLocaleTimeString();
 
     document.getElementById("date").innerHTML =
         now.toDateString();
-
-    let h = now.getHours() % 12;
-    let m = now.getMinutes();
-    let s = now.getSeconds();
-
-    document.getElementById("hour").style.transform =
-        `translateX(-50%) rotate(${h * 30 + m / 2}deg)`;
-
-    document.getElementById("minute").style.transform =
-        `translateX(-50%) rotate(${m * 6}deg)`;
-
-    document.getElementById("second").style.transform =
-        `translateX(-50%) rotate(${s * 6}deg)`;
 }
 
+setInterval(updateClock,1000);
 updateClock();
-setInterval(updateClock, 1000);
 
+// ===============================
+// GREETING
+// ===============================
 
-// =====================
-// World Clock
-// =====================
+function updateGreeting(){
 
-function updateWorldClocks() {
+    const hour = new Date().getHours();
+
+    let text = "";
+
+    if(hour < 12){
+        text = "☀️ Good Morning";
+    }
+    else if(hour < 18){
+        text = "🌤 Good Afternoon";
+    }
+    else{
+        text = "🌙 Good Evening";
+    }
+
+    document.getElementById("greeting").innerHTML = text;
+}
+
+updateGreeting();
+
+// ===============================
+// ANALOG CLOCK
+// ===============================
+
+function updateAnalogClock(){
+
+    const now = new Date();
+
+    const sec = now.getSeconds();
+    const min = now.getMinutes();
+    const hr = now.getHours();
+
+    const secDeg = sec * 6;
+    const minDeg = min * 6 + sec * 0.1;
+    const hrDeg = hr * 30 + min * 0.5;
+
+    document.getElementById("second").style.transform =
+        `translateX(-50%) rotate(${secDeg}deg)`;
+
+    document.getElementById("minute").style.transform =
+        `translateX(-50%) rotate(${minDeg}deg)`;
+
+    document.getElementById("hour").style.transform =
+        `translateX(-50%) rotate(${hrDeg}deg)`;
+}
+
+setInterval(updateAnalogClock,1000);
+updateAnalogClock();
+
+// ===============================
+// WORLD CLOCK
+// ===============================
+
+function updateWorldClock(){
 
     document.getElementById("india").innerHTML =
-        new Date().toLocaleTimeString("en-IN", {
-            timeZone: "Asia/Kolkata"
+        new Date().toLocaleTimeString("en-IN",{
+            timeZone:"Asia/Kolkata"
         });
 
     document.getElementById("usa").innerHTML =
-        new Date().toLocaleTimeString("en-US", {
-            timeZone: "America/New_York"
+        new Date().toLocaleTimeString("en-US",{
+            timeZone:"America/New_York"
         });
 
-    document.getElementById("uk").innerHTML =
-        new Date().toLocaleTimeString("en-GB", {
-            timeZone: "Europe/London"
-        });
-
-    document.getElementById("japan").innerHTML =
-        new Date().toLocaleTimeString("en-US", {
-            timeZone: "Asia/Tokyo"
-        });
-
-    document.getElementById("australia").innerHTML =
-        new Date().toLocaleTimeString("en-AU", {
-            timeZone: "Australia/Sydney"
-        });
-
-    document.getElementById("dubai").innerHTML =
-        new Date().toLocaleTimeString("en-US", {
-            timeZone: "Asia/Dubai"
-        });
-
-    document.getElementById("china").innerHTML =
-        new Date().toLocaleTimeString("en-US", {
-            timeZone: "Asia/Shanghai"
-        });
-
-    document.getElementById("france").innerHTML =
-        new Date().toLocaleTimeString("en-US", {
-            timeZone: "Europe/Paris"
+    document.getElementById("london").innerHTML =
+        new Date().toLocaleTimeString("en-GB",{
+            timeZone:"Europe/London"
         });
 }
 
-updateWorldClocks();
-setInterval(updateWorldClocks, 1000);
+setInterval(updateWorldClock,1000);
+updateWorldClock();
 
+// ===============================
+// ALARM SYSTEM
+// ===============================
 
-// =====================
-// Alarm
-// =====================
+let alarmTime = null;
 
-let alarmTime = "";
+const alarmAudio =
+    document.getElementById("alarmSound");
 
-function setAlarm() {
+function setAlarm(){
 
     alarmTime =
         document.getElementById("alarmTime").value;
 
-    alert("Alarm Set Successfully!");
+    if(!alarmTime){
+
+        alert("Please select a time");
+
+        return;
+    }
+
+    document.getElementById("alarmStatus")
+    .innerHTML =
+    "⏰ Alarm Set For : " + alarmTime;
 }
 
-setInterval(() => {
+function stopAlarm(){
+
+    alarmAudio.pause();
+
+    alarmAudio.currentTime = 0;
+
+    document.getElementById("alarmStatus")
+    .innerHTML =
+    "Alarm Stopped";
+}
+
+function snoozeAlarm(){
+
+    stopAlarm();
 
     let now = new Date();
 
-    let currentTime =
-        String(now.getHours()).padStart(2, '0') +
-        ":" +
-        String(now.getMinutes()).padStart(2, '0');
+    now.setMinutes(now.getMinutes() + 5);
 
-    if (currentTime === alarmTime) {
-        alert("⏰ Alarm Ringing!");
+    alarmTime =
+        String(now.getHours()).padStart(2,"0")
+        + ":" +
+        String(now.getMinutes()).padStart(2,"0");
+
+    document.getElementById("alarmStatus")
+    .innerHTML =
+    "😴 Snoozed For 5 Minutes";
+}
+
+setInterval(()=>{
+
+    if(!alarmTime) return;
+
+    const now = new Date();
+
+    const currentTime =
+        String(now.getHours()).padStart(2,"0")
+        + ":" +
+        String(now.getMinutes()).padStart(2,"0");
+
+    if(currentTime === alarmTime){
+
+        alarmAudio.play();
+
+        document.getElementById("alarmStatus")
+        .innerHTML =
+        "🚨 Alarm Ringing!";
+
+        alarmTime = null;
     }
 
-}, 1000);
+},1000);
 
+// ===============================
+// STOPWATCH
+// ===============================
 
-// =====================
-// Stopwatch
-// =====================
+let stopwatchInterval;
 
-let timer;
+let hours = 0;
+let minutes = 0;
 let seconds = 0;
 
-function startStopwatch() {
+function updateStopwatch(){
 
-    clearInterval(timer);
+    seconds++;
 
-    timer = setInterval(() => {
+    if(seconds === 60){
 
-        seconds++;
+        seconds = 0;
 
-        let hrs = Math.floor(seconds / 3600);
-        let mins = Math.floor((seconds % 3600) / 60);
-        let secs = seconds % 60;
+        minutes++;
+    }
 
-        document.getElementById("stopwatch").innerHTML =
-            `${String(hrs).padStart(2, '0')}:` +
-            `${String(mins).padStart(2, '0')}:` +
-            `${String(secs).padStart(2, '0')}`;
+    if(minutes === 60){
 
-    }, 1000);
+        minutes = 0;
+
+        hours++;
+    }
+
+    document.getElementById("stopwatch")
+    .innerHTML =
+    `${String(hours).padStart(2,'0')}:` +
+    `${String(minutes).padStart(2,'0')}:` +
+    `${String(seconds).padStart(2,'0')}`;
 }
 
-function stopStopwatch() {
-    clearInterval(timer);
+function startStopwatch(){
+
+    if(stopwatchInterval) return;
+
+    stopwatchInterval =
+        setInterval(updateStopwatch,1000);
 }
 
-function resetStopwatch() {
+function pauseStopwatch(){
 
-    clearInterval(timer);
+    clearInterval(stopwatchInterval);
 
+    stopwatchInterval = null;
+}
+
+function resetStopwatch(){
+
+    clearInterval(stopwatchInterval);
+
+    stopwatchInterval = null;
+
+    hours = 0;
+    minutes = 0;
     seconds = 0;
 
-    document.getElementById("stopwatch").innerHTML =
-        "00:00:00";
+    document.getElementById("stopwatch")
+    .innerHTML = "00:00:00";
 }
 
+// ===============================
+// BATTERY STATUS
+// ===============================
 
-// =====================
-// Battery Status
-// =====================
+if("getBattery" in navigator){
 
-if (navigator.getBattery) {
+    navigator.getBattery().then((battery)=>{
 
-    navigator.getBattery().then((battery) => {
+        function updateBattery(){
 
-        function updateBattery() {
-
-            document.getElementById("battery").innerHTML =
-                Math.round(battery.level * 100) + "%";
+            document.getElementById("battery")
+            .innerHTML =
+            "🔋 " +
+            Math.round(battery.level * 100)
+            + "%";
         }
 
         updateBattery();
@@ -195,94 +280,141 @@ if (navigator.getBattery) {
             "levelchange",
             updateBattery
         );
+
     });
+
+}
+else{
+
+    document.getElementById("battery")
+    .innerHTML =
+    "Battery API Not Supported";
 }
 
+// ===============================
+// TO DO LIST
+// ===============================
 
-// =====================
-// To Do List
-// =====================
-
-function addTask() {
+function addTask(){
 
     let task =
         document.getElementById("taskInput").value;
 
-    if (task === "") return;
+    if(task.trim() === "") return;
 
-    let li = document.createElement("li");
-    li.textContent = task;
+    let li =
+        document.createElement("li");
+
+    li.innerHTML =
+    `${task}
+     <span style="float:right;cursor:pointer;"
+     onclick="this.parentElement.remove()">
+     ❌
+     </span>`;
 
     document.getElementById("taskList")
-        .appendChild(li);
+    .appendChild(li);
 
-    let tasks =
-        JSON.parse(localStorage.getItem("tasks"))
-        || [];
-
-    tasks.push(task);
-
-    localStorage.setItem(
-        "tasks",
-        JSON.stringify(tasks)
-    );
-
-    document.getElementById("taskInput").value = "";
+    document.getElementById("taskInput")
+    .value = "";
 }
 
-window.onload = function () {
-
-    let tasks =
-        JSON.parse(localStorage.getItem("tasks"))
-        || [];
-
-    tasks.forEach(task => {
-
-        let li = document.createElement("li");
-
-        li.textContent = task;
-
-        document.getElementById("taskList")
-            .appendChild(li);
-    });
-
-};
-
-
-// =====================
-// Quotes
-// =====================
+// ===============================
+// DAILY QUOTES
+// ===============================
 
 const quotes = [
-    "Success is the sum of small efforts repeated daily.",
-    "Believe you can and you're halfway there.",
-    "Dream big and dare to fail.",
-    "Stay positive and work hard.",
-    "Every day is a new beginning."
+
+"Success is the sum of small efforts repeated every day.",
+
+"Believe you can and you're halfway there.",
+
+"Dream big. Start small. Act now.",
+
+"Success begins with self-discipline.",
+
+"Stay positive, work hard, make it happen.",
+
+"Every day is a chance to improve yourself."
 ];
 
-let quoteIndex = 0;
+document.getElementById("quote")
+.innerHTML =
+quotes[Math.floor(Math.random() * quotes.length)];
 
-setInterval(() => {
+// ===============================
+// VISITOR COUNTER
+// ===============================
 
-    if (document.getElementById("quote")) {
+let visits =
+localStorage.getItem("timeverse_visits")
+|| 0;
 
-        document.getElementById("quote").innerHTML =
-            quotes[quoteIndex];
+visits++;
 
-        quoteIndex =
-            (quoteIndex + 1) % quotes.length;
-    }
+localStorage.setItem(
+"timeverse_visits",
+visits
+);
 
-}, 5000);
+document.getElementById("visitorCount")
+.innerHTML = visits;
 
+// ===============================
+// DARK / LIGHT MODE
+// ===============================
 
-// =====================
-// Theme Changer
-// =====================
+const themeBtn =
+document.getElementById("themeBtn");
 
-function changeTheme(color1, color2) {
+themeBtn.addEventListener("click",()=>{
+
+    document.body.classList.toggle("light");
+
+});
+
+// ===============================
+// THEME CHANGER
+// ===============================
+
+function changeTheme(color){
 
     document.body.style.background =
-        `linear-gradient(135deg, ${color1}, ${color2})`;
+    `linear-gradient(
+        135deg,
+        ${color},
+        #0f172a,
+        #06b6d4
+    )`;
 }
+
+// ===============================
+// FULL SCREEN
+// ===============================
+
+function openFullscreen(){
+
+    if(document.documentElement.requestFullscreen){
+
+        document.documentElement
+        .requestFullscreen();
+    }
+}
+
+// ===============================
+// VOICE WELCOME
+// ===============================
+
+setTimeout(()=>{
+
+    const speech =
+    new SpeechSynthesisUtterance(
+    "Welcome to TimeVerse Pro Dashboard");
+
+    speech.rate = 1;
+
+    speech.volume = 1;
+
+    speechSynthesis.speak(speech);
+
+},2500);
