@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TimeVerse Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>⏰ TimeVerse</h1>
+        <p>Smart Digital Clock Dashboard</p>
+    </header>
+
+    <!-- Digital Clock -->
+    <div class="clock-box">
+        <h2 id="digitalClock">00:00:00</h2>
+        <p id="date"></p>
+    </div>
+
+    <!-- Analog Clock -->
+    <div class="analog-clock">
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+        <div class="center-dot"></div>
+    </div>
+
+    <!-- Widgets -->
+    <section class="widgets">
+
+        <div class="card">
+            <h3>⏰ Alarm</h3>
+            <input type="time" id="alarmTime">
+            <button onclick="setAlarm()">Set Alarm</button>
+        </div>
+
+        <div class="card">
+            <h3>⏱ Stopwatch</h3>
+            <h2 id="stopwatch">00:00:00</h2>
+            <button onclick="startStopwatch()">Start</button>
+            <button onclick="stopStopwatch()">Stop</button>
+            <button onclick="resetStopwatch()">Reset</button>
+        </div>
+
+        <div class="card">
+            <h3>🌍 World Clock</h3>
+            <p id="worldClock"></p>
+        </div>
+
+        <div class="card">
+            <h3>🔋 Battery</h3>
+            <p id="battery">Loading...</p>
+        </div>
+
+        <div class="card">
+            <h3>📅 Calendar</h3>
+            <input type="date">
+        </div>
+
+        <div class="card">
+            <h3>👥 Visitors</h3>
+            <p id="visitors">1</p>
+        </div>
+
+    </section>
+
+    <!-- To Do -->
+    <section class="todo">
+        <h2>📝 To Do List</h2>
+        <input type="text" id="taskInput" placeholder="Add task">
+        <button onclick="addTask()">Add</button>
+        <ul id="taskList"></ul>
+    </section>
+
+    <!-- Quotes -->
+    <section class="quotes">
+        <h2>💡 Daily Quote</h2>
+        <p id="quote">Believe you can and you're halfway there.</p>
+    </section>
+
+    <!-- Theme Changer -->
+    <section class="theme">
+        <h2>🎨 Theme Changer</h2>
+        <button onclick="changeTheme('#1e3a8a','#38bdf8')">Blue</button>
+        <button onclick="changeTheme('#4c1d95','#8b5cf6')">Purple</button>
+        <button onclick="changeTheme('#064e3b','#10b981')">Green</button>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <h2>🚀 Features</h2>
+
+        <div class="feature-grid">
+            <div class="feature">⏰ Digital Clock</div>
+            <div class="feature">🕒 Analog Clock</div>
+            <div class="feature">🌍 World Clock</div>
+            <div class="feature">⏰ Alarm</div>
+            <div class="feature">⏱ Stopwatch</div>
+            <div class="feature">📅 Calendar</div>
+            <div class="feature">🔋 Battery Status</div>
+            <div class="feature">📝 To-Do List</div>
+            <div class="feature">💡 Quotes</div>
+            <div class="feature">👥 Visitor Counter</div>
+            <div class="feature">🎨 Theme Changer</div>
+            <div class="feature">📱 Responsive Design</div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about">
+        <h2>About TimeVerse</h2>
+        <p>
+            TimeVerse is a Smart Digital Clock Dashboard developed using
+            HTML, CSS and JavaScript. It combines productivity and
+            time management tools in a modern responsive interface.
+        </p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <h2>⏰ TimeVerse Dashboard</h2>
+        <p>Designed & Developed by Anusha Rani</p>
+        <p>AI & DS Student</p>
+        <p>© 2026 All Rights Reserved</p>
+    </footer>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
