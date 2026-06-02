@@ -28,12 +28,43 @@ setInterval(updateClock,1000);
 
 // World Clock
 
-setInterval(()=>{
-let india=new Date().toLocaleTimeString("en-IN");
-document.getElementById("worldClock").innerHTML=
-"India: "+india;
-},1000);
+function updateWorldClocks(){
 
+document.getElementById("india").innerHTML =
+new Date().toLocaleTimeString("en-IN",
+{timeZone:"Asia/Kolkata"});
+
+document.getElementById("usa").innerHTML =
+new Date().toLocaleTimeString("en-US",
+{timeZone:"America/New_York"});
+
+document.getElementById("uk").innerHTML =
+new Date().toLocaleTimeString("en-GB",
+{timeZone:"Europe/London"});
+
+document.getElementById("japan").innerHTML =
+new Date().toLocaleTimeString("en-US",
+{timeZone:"Asia/Tokyo"});
+
+document.getElementById("australia").innerHTML =
+new Date().toLocaleTimeString("en-AU",
+{timeZone:"Australia/Sydney"});
+
+document.getElementById("dubai").innerHTML =
+new Date().toLocaleTimeString("en-US",
+{timeZone:"Asia/Dubai"});
+
+document.getElementById("china").innerHTML =
+new Date().toLocaleTimeString("en-US",
+{timeZone:"Asia/Shanghai"});
+
+document.getElementById("france").innerHTML =
+new Date().toLocaleTimeString("en-US",
+{timeZone:"Europe/Paris"});
+}
+
+setInterval(updateWorldClocks,1000);
+updateWorldClocks();
 // Alarm
 
 let alarmTime="";
