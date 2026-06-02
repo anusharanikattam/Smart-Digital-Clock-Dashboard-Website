@@ -3,255 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TimeVerse - Smart Digital Clock Dashboard</title>
-
+<title>TimeVerse Dashboard</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- Loader -->
-<div id="loader">
-    <h1>⏰ TimeVerse</h1>
-</div>
+<div class="container">
 
-<!-- Animated Background -->
-<div class="particles"></div>
-
-<!-- Header -->
-<header>
     <h1>⏰ TimeVerse</h1>
     <p>Smart Digital Clock Dashboard</p>
 
-    <div class="header-buttons">
-        <button id="themeBtn">🌙 Dark / Light</button>
-        <button onclick="openFullscreen()">🖥 Full Screen</button>
-    </div>
-</header>
-
-<!-- Hero Section -->
-<section class="hero">
-
-    <h2 id="greeting">Welcome</h2>
-
-    <!-- Digital Clock -->
     <div class="clock-card">
-
-        <h1 id="clock">00:00:00</h1>
-
-        <h3 id="date">Loading...</h3>
-
+        <h2 id="digitalClock">00:00:00</h2>
+        <p id="date"></p>
     </div>
 
-    <!-- Analog Clock -->
     <div class="analog-clock">
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+    </div>
 
-        <div class="clock">
+    <div class="cards">
 
-            <div class="hand hour" id="hour"></div>
+        <div class="card">
+            <h3>⏰ Alarm</h3>
+            <input type="time" id="alarmTime">
+            <button onclick="setAlarm()">Set Alarm</button>
+        </div>
 
-            <div class="hand minute" id="minute"></div>
+        <div class="card">
+            <h3>⏱ Stopwatch</h3>
+            <h2 id="stopwatch">00:00:00</h2>
+            <button onclick="startStopwatch()">Start</button>
+            <button onclick="resetStopwatch()">Reset</button>
+        </div>
 
-            <div class="hand second" id="second"></div>
+        <div class="card">
+            <h3>🌍 World Clock</h3>
+            <p id="worldClock"></p>
+        </div>
 
-            <div class="center-dot"></div>
+        <div class="card">
+            <h3>🔋 Battery</h3>
+            <p id="battery">Loading...</p>
+        </div>
 
+        <div class="card">
+            <h3>📅 Calendar</h3>
+            <input type="date">
+        </div>
+
+        <div class="card">
+            <h3>🌦 Weather</h3>
+            <p>28°C Sunny</p>
+        </div>
+
+        <div class="card">
+            <h3>💡 Motivation</h3>
+            <p>Stay focused and productive.</p>
+        </div>
+
+        <div class="card">
+            <h3>📈 Productivity</h3>
+            <p>85% Completed</p>
         </div>
 
     </div>
 
-</section>
-
-<!-- Dashboard -->
-<section class="dashboard">
-
-    <!-- Alarm -->
-    <div class="card">
-        <h2>⏰ Alarm</h2>
-
-        <input type="time" id="alarmTime">
-
-        <button onclick="setAlarm()">Set Alarm</button>
-
-        <p id="alarmStatus"></p>
-    </div>
-
-    <!-- Stopwatch -->
-    <div class="card">
-
-        <h2>⏱ Stopwatch</h2>
-
-        <h1 id="stopwatch">00:00:00</h1>
-
-        <button onclick="startStopwatch()">Start</button>
-
-        <button onclick="pauseStopwatch()">Pause</button>
-
-        <button onclick="resetStopwatch()">Reset</button>
-
-    </div>
-
-    <!-- World Clock -->
-    <div class="card">
-
-        <h2>🌍 World Clock</h2>
-
-        <p>🇮🇳 India: <span id="india"></span></p>
-
-        <p>🇺🇸 USA: <span id="usa"></span></p>
-
-        <p>🇬🇧 London: <span id="london"></span></p>
-
-    </div>
-
-    <!-- Battery -->
-    <div class="card">
-
-        <h2>🔋 Battery Status</h2>
-
-        <p id="battery">Loading...</p>
-
-    </div>
-
-    <!-- Calendar -->
-    <div class="card">
-
-        <h2>📅 Calendar</h2>
-
-        <input type="date">
-
-    </div>
-
-    <!-- Visitor Counter -->
-    <div class="card">
-
-        <h2>👥 Visitors</h2>
-
-        <h1 id="visitorCount">0</h1>
-
-    </div>
-
-    <!-- Quotes -->
-    <div class="card">
-
-        <h2>💡 Daily Motivation</h2>
-
-        <p id="quote"></p>
-
-    </div>
-
-    <!-- Productivity -->
-    <div class="card">
-
-        <h2>📈 Productivity</h2>
-
-        <progress value="75" max="100"></progress>
-
-        <p>75% Completed</p>
-
-    </div>
-
-</section>
-
-<!-- To Do List -->
-<section class="todo-section">
-
-    <div class="card">
-
-        <h2>📝 To-Do List</h2>
-
-        <input type="text"
-               id="taskInput"
-               placeholder="Enter Task">
-
-        <button onclick="addTask()">Add Task</button>
-
+    <div class="todo">
+        <h3>📝 To-Do List</h3>
+        <input type="text" id="taskInput">
+        <button onclick="addTask()">Add</button>
         <ul id="taskList"></ul>
-
     </div>
 
-</section>
-
-<!-- Theme Changer -->
-<section class="theme-section">
-
-    <div class="card">
-
-        <h2>🎨 Theme Colors</h2>
-
-        <button onclick="changeTheme('#2563eb')">
-            Blue
-        </button>
-
-        <button onclick="changeTheme('#9333ea')">
-            Purple
-        </button>
-
-        <button onclick="changeTheme('#16a34a')">
-            Green
-        </button>
-
-    </div>
-
-</section>
-
-<!-- Features -->
-<section class="features">
-
-    <h2>🚀 Features</h2>
-
-    <div class="feature-grid">
-
-        <div>⏰ Digital Clock</div>
-        <div>🕒 Analog Clock</div>
-        <div>🌍 World Clock</div>
-        <div>⏰ Alarm</div>
-        <div>⏱ Stopwatch</div>
-        <div>📅 Calendar</div>
-        <div>🔋 Battery Status</div>
-        <div>📝 To-Do List</div>
-        <div>💡 Quotes</div>
-        <div>👥 Visitor Counter</div>
-        <div>🎨 Theme Changer</div>
-        <div>📱 Responsive Design</div>
-
-    </div>
-
-</section>
-
-<!-- About -->
-<section class="about">
-
-    <h2>About TimeVerse</h2>
-
-    <p>
-        TimeVerse is a Smart Digital Clock Dashboard
-        developed using HTML, CSS and JavaScript.
-        It combines productivity and time management
-        tools in a modern responsive interface.
-    </p>
-
-</section>
-
-<!-- Footer -->
-<footer>
-
-    <h2>⏰ TimeVerse Dashboard</h2>
-
-    <p>Designed & Developed by Anusha Rani</p>
-
-    <p>AI & DS Student</p>
-
-    <p>© 2026 All Rights Reserved</p>
-
-</footer>
-
-<!-- Alarm Audio -->
-<audio id="alarmSound">
-    <source src="alarm.mp3" type="audio/mpeg">
-</audio>
+</div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
